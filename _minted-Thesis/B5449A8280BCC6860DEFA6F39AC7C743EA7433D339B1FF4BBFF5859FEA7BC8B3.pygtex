@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{get\PYGZus{}logger}\PYG{p}{()}\PYG{o}{.}\PYG{n}{error}\PYG{p}{(}\PYG{n}{result}\PYG{p}{)}
+\end{Verbatim}

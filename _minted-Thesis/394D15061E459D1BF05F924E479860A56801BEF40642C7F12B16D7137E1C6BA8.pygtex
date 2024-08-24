@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{+w}{	}\PYG{k}{export}\PYG{+w}{ }\PYG{k+kd}{function}\PYG{+w}{ }\PYG{n+nx}{request}\PYG{p}{(}\PYG{n+nx}{ctx}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{	  }\PYG{c+c1}{//handle the request}
+\PYG{+w}{	  }\PYG{c+c1}{//return the result}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

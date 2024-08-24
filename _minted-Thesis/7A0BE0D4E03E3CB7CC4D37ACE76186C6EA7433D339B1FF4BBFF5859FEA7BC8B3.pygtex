@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{k}{def} \PYG{n+nf}{get\PYGZus{}logger}\PYG{p}{(}\PYG{n}{level}\PYG{p}{:} \PYG{n+nb}{int} \PYG{o}{=} \PYG{n}{logging}\PYG{o}{.}\PYG{n}{INFO}\PYG{p}{):}
+	    \PYG{n}{logger} \PYG{o}{=} \PYG{n}{logging}\PYG{o}{.}\PYG{n}{getLogger}\PYG{p}{()}
+	    \PYG{n}{logger}\PYG{o}{.}\PYG{n}{setLevel}\PYG{p}{(}\PYG{n}{level}\PYG{p}{)}
+	    \PYG{k}{return} \PYG{n}{logger}
+\end{Verbatim}

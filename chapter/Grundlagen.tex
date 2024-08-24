@@ -1,0 +1,34 @@
+\section{Grundlagen}
+Im Folgenden sollen Konzepte und Werkzeuge erklärt werden, die für das Verständnis dieser Arbeit vorausgesetzt sind. Dazu gehören sowohl die Metriken, mit denen die Zielerreichung festgestellt werden soll, als auch das theoretische Wissen, auf denen das Projekt aufbaut. 
+\subsection {Konzepte} 
+Die verwendeten Konzepte für diese Arbeit sind: 
+\subsubsection{Application Programming Interface (API)}
+APIs sind Schnittstellen, die Entwicklern von Anwendungen die Möglichkeit bieten, auf Daten einer der Anwendung fernen Datenquelle sowohl lesend als auch schreibend zuzugreifen. \cite{Masse2011} Bei geheimen Daten kann es dazu kommen, dass ein Entwickler nur mittels eines sogenannten „Disposable Tokens“ Zugriff auf die Daten hinter der Schnittstelle erlangen kann. Dabei wird ein Token generiert, welches Clients authentifiziert. Mit dieser Authentifizierung können auch verschiedene Berechtigungen wie „Read-Access“ (Nur lesen) oder „Read-Write-Access“ (Lesen und Schreiben) mit einem Nutzer assoziiert werden. Dieses System trägt dazu bei, die Datenintegrität der Daten zu gewährleisten.
+\subsubsection{Effizienzfaktoren} 
+Kosten werden in AWS auf Basis der aufgewendeten Ressourcen berechnet. \cite{Kavis2014} Deshalb ist der Faktor Kosten für die Evaluierung potenzieller Effizienz relevant. Einerseits sollen Abfragen eine akzeptable und stabile Response time ermöglichen, gleichzeitig sollen die dafür nötigen Ressourcen möglichst klein gehalten werden. Es ist dementsprechend nicht zielführend, für eine höhere Effizienz die Rechenleistung und somit die Kosten zu erhöhen; viel eher soll der Verarbeitungsprozess bei Bedarf vereinfacht und optimiert werden, sodass die Response time ohne Erhöhung der Rechenkapazität verbessert wird. \cite{AWS2024e} 
+\subsubsection{Daten}
+Im Folgenden wird das Konzept der Daten eine zentrale Rolle spielen. Referenziert sind dabei alle solche Daten, mit denen Einsicht in die Gesundheit des Systems ermöglicht werden. 
+\subsection{Werkzeuge} 
+Zur Umsetzung der praktischen Elemente der Praxisarbeit werden die im Folgenden beschriebenen Elemente verwendet: 
+\subsubsection{AWS} 
+AWS ist eine Cloud-Computing Plattform des Unternehmens Amazon, welches unter anderem Funktionen in der Datenverarbeitung, Datenspeicherung und Monitoring anbietet. Unter anderem Teil des AWS-Portfolios sind die Anwendungen „CloudWatch“, „AppSync“ und „DynamoDB“, welche im Laufe dieses Projekts Verwendung finden werden. \cite{Baron2017} 
+\subsubsection{Datenbereitstellungen}
+\paragraph{DynamoDB} 
+DynamoDB ist eine vollständig verwaltete Schlüssel-Wert- und Dokumentendatenbank, die bei jeder Größenordnung eine Responsetime von wenigen Millisekunden garantiert \paragraph{GraphQL} 
+GraphQL ist eine Query-Sprache mit denen sich Abfragen für eine API konfigurieren lassen. Durch die Begrenzung der Ausgabe auf explizit in der Query geforderte Elemente werden Ressourcen gespart. \cite{Porcello2018}
+
+\paragraph{AppSync} 
+AppSync bietet Werkzeuge zur Erstellung flexibler Schnittstellen, durch die ein sicherer Zugriff und Manipulation von Daten einer oder mehrerer Datensätze möglich ist. \paragraph{Terraform} 
+Terrafirn ist eine Konfigurationssprache, mit der eine Infrastruktur aufgesetzt wird, die Multi-Cloud-Bereitstellung automatisiert. \cite{Brikman2019} 
+\subsubsection{Datentransport}
+\paragraph{CloudFormation}
+AWS CloudFormation bietet eine Plattform, mit der Integrationen zwischen AWS und externen Anwendungen hergestellt werden können. In Form von sogenannten ``Stacks'' können in CloudFormation Sammlungen von AWS-Ressourcen gespeichert werden, mit denen Daten von und zu diesen externen Anwendungen fließen können.
+\subsubsection{Datenabrauf}
+\paragraph{Lambda}
+ ambda ist eine Applikation des AWS-Systems, mit welcher automatische Datenverarbeitung auf Basis von selbst geschriebenen Methoden in fast jeder Art der Anwendung oder jedem Backend-Service ermöglicht. \cite{AWS2024d} 
+ 
+ \subsubsection{Datenverarbeitung}
+\paragraph{DataDog} 
+DataDog ist, ähnlich wie CloudWatch, eine Applikation zur Überwachung von Ressourcen und Applikationen, jedoch mit Fokus auf Performance. Unter anderem durch Graphen lassen sich mit DataDog Trends in der Performance erkennen, wodurch präventive Maßnahmen getroffen werden können. \cite{Dixon2018} 
+\paragraph{CloudWatch} 
+CloudWatch ist eine Applikation des AWS-Portfolios, mit welcher Ressourcen und Applikationen, die in der AWS-Umgebung laufen, in Echtzeit überwacht werden können. Unter anderem werden Fehler und ihre Meldungen dokumentiert, Hinweise und andere Logs gespeichert, und wenn gewünscht Alarme ausgelöst. \cite{AWS2024a} \cite{AWS2024b} . \cite{AWS2024c}

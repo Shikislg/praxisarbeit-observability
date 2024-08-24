@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{+w}{	}\PYG{k+kr}{resource}\PYG{+w}{ }\PYG{n+nc}{\PYGZdq{}aws\PYGZus{}iam\PYGZus{}role\PYGZus{}policy\PYGZus{}attachment\PYGZdq{}}\PYG{+w}{ }\PYG{n+nv}{\PYGZdq{}logging\PYGZdq{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{	  }\PYG{n+na}{policy\PYGZus{}arn}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}arn:aws:iam::aws:policy/service\PYGZhy{}role/AWSAppSyncPushToCloudWatchLogs\PYGZdq{}}
+\PYG{+w}{	  }\PYG{n+na}{role}\PYG{+w}{           }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nv}{aws\PYGZus{}iam\PYGZus{}role.logging.name}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

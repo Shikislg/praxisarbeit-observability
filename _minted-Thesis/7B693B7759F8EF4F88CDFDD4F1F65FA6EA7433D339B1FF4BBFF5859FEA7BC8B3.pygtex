@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{k}{def} \PYG{n+nf}{get\PYGZus{}secret}\PYG{p}{(}\PYG{n}{secret\PYGZus{}id}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{n+nb}{str}\PYG{p}{:}
+	    \PYG{n}{response} \PYG{o}{=} \PYG{n}{sm\PYGZus{}client}\PYG{o}{.}\PYG{n}{get\PYGZus{}secret\PYGZus{}value}\PYG{p}{(}\PYG{n}{SecretId}\PYG{o}{=}\PYG{n}{secret\PYGZus{}id}\PYG{p}{)}
+	    \PYG{k}{return} \PYG{n}{response}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}SecretString\PYGZdq{}}\PYG{p}{]}
+\end{Verbatim}

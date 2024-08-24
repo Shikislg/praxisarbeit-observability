@@ -1,0 +1,77 @@
+\section{Anforderungen}
+Im Folgenden sollen die durchzuführenden Maßnahmen definiert werden, mit denen die Zielstellung erfüllt werden soll. 
+An erster Stelle der Infrastruktur stehen die Daten selbst. Diese sind in einer mit DynamoDB aufgesetzten Datenbank gespeichert. 
+Im Gegensatz zu unter anderem relationalen Datenbanken, in welchen neben dem Schlüssel auch jede Spalte genau definiert ist, bietet DynamoDB sogenannte „noSQL“-Datenbanken an, die neben einem Schlüsselelement keine weiteren Vorgaben an den Spaltenaufbau machen. Daran muss die Datenverarbeitung mit entsprechenden Vorgaben und Kontrollen angepasst werden, um Laufzeitfehler durch Datentypkonversionen oder fehlende Daten zu vermeiden.  Auf diese Daten greift eine API zu, welche mit AppSync entwickelt wurde. Sie bietet Nutzern die Möglichkeit, Daten je nach Bedarf zu lesen, bearbeiten oder hinzuzufügen. Im Hintergrund der API werden sowohl Terraform als auch GraphQL angewendet. Mit Terraform werden die API und ihre Anfragen-, mit GraphQL das erwartete Datenschema der Datenbank definiert, auf dessen Basis die API-Anfrage verarbeitet wird. Daten zu dieser API werden in zwei Richtungen weitergeleitet. Zum einen werden jegliche in der API auftretende Fehler an CloudWatch gesendet, wo diese dann verarbeitet werden, und zuständige Entwickler alarmiert. Zum anderen werden Daten über die zeitliche Effizienz an DataDog gesendet, wo sie in einem Dashboard verarbeitet werden, über welches die Entwickler die Performance der API prüfen, und eventuell bei schlechter Performance handeln können. Sollte die Vermutung bestehen, dass Teile der API fehleranfälliger sind, kann auf dem Dashboard in DataDog ebenfalls eine Übersicht über auftretende Fehler mit ihrer Häufigkeit und Gefahr aufgesetzt werden.
+Es soll ein Testsystem aufgebaut werden, welches das Produktivsystem imitiert. Auf diesem System soll dann die Überwachung einer zu erstellenden Test-API (als Beispiel einer produktiven API) implementiert werden. Für die Erstellung der Test-API wurden die folgenden Elemente gewählt: 
+\subsection{Datengrundlage}
+Die Basis der Test-API bildet die DynamoDB-Tabelle „user-db“ (in Zukunft ``Tabelle''), mit der E-Mail-Adresse des Nutzers als Schlüsselelement. Zwar ist dies nicht von DynamoDB vorgeschrieben, jedoch sind in dieser Implementation die Spalten ebenfalls (auf semantischer Ebene) festgelegt, um die Komplexität der Datenverarbeitung kontrollieren zu können.  Dazu sind die Informationen, die zu einem Nutzer abgespeichert werden in diesem Kontext konstant, weshalb flexible Spalten keinen Vorteil bieten. \newpage 
+Die Spalten sind folgendermaßen aufgeteilt:
+
+\begin{table}[hbt]
+\centering
+\begin{minipage}[t]{.5\textwidth} % Breite, z.B. 1\textwidth		
+\caption{Aufbau der Tabelle} % Überschrift
+\begin{tabularx}{\columnwidth}{rr}
+\toprule
+Spalte & Beschreibung\\
+\midrule
+E-Mail & E-Mail-Adresse des Nutzers\\
+Name   & Name des Nutzers\\
+Status & Aktivitäts-Status (Aktiv/Inaktiv)\\
+\bottomrule
+\end{tabularx}
+\source{Eigene Darstellung} % Quelle
+\label{tab:pin}
+\end{minipage}
+\end{table}
+\subsection{Die Test-API}
+Unter Nutzung dieser Daten soll die Test-API folgende Methoden anbieten. Eine Varianz soll in den Methoden gegeben sein, damit unterschiedliche Laufzeitverhalten und auftretende Fehler simuliert und gemessen werden können:
+\subsubsection{Abfrage ``GetUser''}
+Als Parameter für diese Abfrage erwartet die API einen String, welcher die E-Mail-Adresse beinhalten soll zu der die Nutzerdaten angefordert werden. Zudem wird nach dem GraphQL-Standard erwartet, dass alle Spalten angegeben werden, deren Ausgabe vom Nutzer erwünscht sind.
+\subsubsection{Abfrage ``GetUsers''}
+Hier erwartet die API nur die auszugebenen Spalten als Parameter. Ausgegeben werden dann die angeforderten Spalten aller Nutzer, die in der Tabelle hinterlegt sind.
+\subsubsection{Abfrage ``AddUser''}
+Die API erwartet hier für jede Spalte der Tabelle jeweils einen String. Dazu erwartet die API eine Angabe zu den Spalten, die nach der Erstellung des Nutzers ausgegeben werden sollen.  Mit diesen Informationen wird dann ein Eintrag in der Tabelle erstellt, und die gewünschten Spalten des erstellten Nutzers ausgegeben.
+\subsection{Fehlerbehandlung in der API}
+Eine Eigenschaft von GraphQL ist, dass Fehler nicht zum Abbruch der Abfrage führen. Tritt ein Fehler auf, wird dieser genau wie ein korrektes Ergebnis als JSON ausgegeben. \cite{Porcello2018b} Der Aufbau der GraphQL-Antwort sieht folgendermaßen aus (die Beschreibungen der Felder werden durch Hovern angezeigt): 
+
+	\begin{figure}[H]
+	\centering
+	\begin{minipage}[t]{.7\textwidth} % Breite, z.B. 1\textwidth		
+	\caption{Beispiel einer JSON-Antwort} % Überschrift
+	\begin{minted}[breaklines=true]{JSON}
+	{
+	    "data": [],
+	    "errors": []
+	}
+	\end{minted}
+	
+	\textit{Eigene Darstellung} % Quelle
+	\label{fig:jsonExample}
+	\end{minipage}
+	\end{figure}
+ 
+Tritt ein Fehler auf, so ist das Feld „data“ leer, und die aufgetretenen Fehler werden in dem Feld „errors“ gelistet. Tritt keiner auf, befindet sich die Antwort auf die Anfrage in dem Feld „data“. \cite{GraphQL2024b}
+Eine Nebeneigenschaft dieser Art der Fehlerbehandlung durch GraphQL ist, dass semantische Fehler in der Eingabe nicht zwingendermaßen abgefangen werden müssen, da die Abfrage trotzdem ausgeführt werden kann. Bei Bedarf kann eine Hilfestellung für Nutzer beim Auftreten häufiger Fehler eingebaut werden. 
+Diese Fehlerbehandlung bringt jedoch eine Hürde in der Fehlererkennung in Datadog, da alle Antworten, ob fehlerhaft oder nicht, den gleichen Fehlercode ausgeben.
+
+\subsection{Datenverteilung}
+Die Infrastruktur für die AWS-Interne Weiterleitung von Daten besteht schon. Um Daten der API in ein Datadog-Dashboard zu integrieren, muss jedoch die Infrastruktur selbst aufgebaut werden. 
+
+\subsubsection{Theorie der Integration}
+Zuerst muss die Verbindung zwischen dem AWS-Account, in dessen Namen auch die API und Tabelle erstellt wurden, und Datadog geknüpft werden. Dafür bietet Datadog eine Oberfläche. Um die Verbindung herzustellen, werden zwei Tokens generiert: ein ``API-Key'' und ein ``Application-Key''. Mit diesen beiden Tokens kann dann in einer bestimmten Region die Schnittstelle seitens Datadog geöffnet werden. Die Schnittstelle seitens AWS ist über das Tool „CloudFormation“ möglich. Dort muss ein Stack erstellt werden, welcher ebenfalls mit dem generierten Application-Key versehen wird, wodurch dann die beiden Schnittstellen miteinander verbunden sind. Ein Datenfluss existiert jedoch trotzdem nicht, da es in der Testumgebung keine Endnutzer gibt; dieser muss manuell in einer Programmiersprache über eine Lambda-Funktion implementiert werden. In diesem Fall wird die Sprache Python verwendet. 
+
+\subsubsection{Lambda-Funktion}
+Für Testzwecke werden im Rahmen dieser Praxisarbeit zwei Lambda-Funktionen erstellt. In der einen Funktion wird eine korrekte, in der anderen eine inkorrekte Abfrage simuliert. Dabei werden Daten zu der Ausgabe und der Antwort-Zeit weitergegeben.  Diese können dann in DataDog als Dashboard umgesetzt werden. 
+
+\subsection{Dashboard}
+Da die Alarmierung bei Fehlern durch CloudWatch abgedeckt ist, muss das DataDog-Dashboard diese nicht abdecken. Um Effizienz und Effektivität kontrollieren zu können, sind die Minimalanforderungen ein Graph für die Response-Time und ein Graph über die Fehlerhäufigkeit. Im Rahmen dieser Praxisarbeit werden jeweils eine KPI für Effizienz und Effektivität abgedeckt, während weitere bei Bedarf in der Zukunft hinzugefügt werden können. dabei wird als Hauptkriterium die Rückmeldung der Endnutzer von Relevanz sein. 
+
+\subsubsection{Effizienz}
+Anhand einer Timeline soll das Dashboard dem Endnutzer ermöglichen, die KPI ``Response time'' zu überprüfen. \cite{DatadogAWS2024}. Das soll anhand eines Zeitgraphen erreicht werden, auf dem die Antwortzeit der Anfragen gemessen werden. Damit Trends leichter erkennbar sind, soll ebenfalls eine Trendlinie über den Graphen gelegt werden. 
+
+\subsubsection{Effektivität}
+Das Dashboard soll dem Endnutzer ermöglichen, das Verhältnis zwischen erfolgreichen und fehlerhaften Anfragen einzusehen, damit zu jedem Zeitpunkt ein Eindruck über die Funktionalität der API möglich ist.
+
+\subsection{CloudWatch}
+Nachdem die API in AWS integriert wurde, löst CloudWatch bei Fehlern selbstständig Alarme aus, weshalb keine weitere Infrastruktur aufgebaut werden muss. Die Logs werden danach sofort gesammelt, und lösen entsprechende Alarme ausgelöst.

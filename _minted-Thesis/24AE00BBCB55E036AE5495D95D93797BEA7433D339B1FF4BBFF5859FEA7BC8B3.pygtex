@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{req} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{Request}\PYG{p}{(}\PYG{n}{url}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}POST\PYGZdq{}}\PYG{p}{)}
+	    \PYG{n}{req}\PYG{o}{.}\PYG{n}{add\PYGZus{}header}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}x\PYGZhy{}api\PYGZhy{}key\PYGZdq{}}\PYG{p}{,} \PYG{n}{key}\PYG{p}{)}
+	    \PYG{n}{req}\PYG{o}{.}\PYG{n}{add\PYGZus{}header}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Content\PYGZhy{}Type\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}application/graphql\PYGZdq{}}\PYG{p}{)}
+\end{Verbatim}

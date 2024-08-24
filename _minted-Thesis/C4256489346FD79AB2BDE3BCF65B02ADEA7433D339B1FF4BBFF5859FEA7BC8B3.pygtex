@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{key} \PYG{o}{=} \PYG{n}{get\PYGZus{}secret}\PYG{p}{(}\PYG{n}{os}\PYG{o}{.}\PYG{n}{environ}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}API\PYGZus{}KEY\PYGZus{}SECRET\PYGZus{}ID\PYGZdq{}}\PYG{p}{])}
+\end{Verbatim}
