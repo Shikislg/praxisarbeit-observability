@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+		\PYG{n}{data} \PYG{o}{=} \PYG{n}{json}\PYG{o}{.}\PYG{n}{dumps}\PYG{p}{(\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}query\PYGZdq{}}\PYG{p}{:} \PYG{n}{query}\PYG{p}{\PYGZcb{})}\PYG{o}{.}\PYG{n}{encode}\PYG{p}{()}
+\end{Verbatim}

@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{+w}{		}\PYG{k+kr}{data}\PYG{+w}{ }\PYG{n+nc}{\PYGZdq{}aws\PYGZus{}iam\PYGZus{}policy\PYGZus{}document\PYGZdq{}}\PYG{+w}{ }\PYG{n+nv}{\PYGZdq{}user\PYGZus{}table\PYGZus{}write\PYGZdq{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{		  }\PYG{n+na}{source\PYGZus{}policy\PYGZus{}documents}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{[}\PYG{n+nv}{data.aws\PYGZus{}iam\PYGZus{}policy\PYGZus{}document.user\PYGZus{}table\PYGZus{}read.json}\PYG{p}{]}
+\PYG{+w}{		}
+\PYG{+w}{		  }\PYG{n+nb}{statement}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{		    }\PYG{n+na}{sid}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}WriteItems\PYGZdq{}}
+\PYG{+w}{		    }\PYG{n+na}{actions}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{[}
+\PYG{+w}{		      }\PYG{l+s+s2}{\PYGZdq{}dynamodb:PutItem\PYGZdq{}}\PYG{p}{,}
+\PYG{+w}{		      }\PYG{l+s+s2}{\PYGZdq{}dynamodb:UpdateItem\PYGZdq{}}\PYG{p}{,}
+\PYG{+w}{		      }\PYG{l+s+s2}{\PYGZdq{}dynamodb:DeleteItem\PYGZdq{}}\PYG{p}{,}
+\PYG{+w}{		    }\PYG{p}{]}
+\PYG{+w}{		    }\PYG{n+na}{resources}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{[}\PYG{n+nv}{aws\PYGZus{}dynamodb\PYGZus{}table.user.arn}\PYG{p}{]}
+\PYG{+w}{		  }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{		}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{		}
+\end{Verbatim}

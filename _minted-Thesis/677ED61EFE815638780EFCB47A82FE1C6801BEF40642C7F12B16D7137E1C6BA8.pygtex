@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{+w}{		}\PYG{k}{import}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{k+kr}{as}\PYG{+w}{ }\PYG{n+nx}{ddb}\PYG{+w}{ }\PYG{k+kr}{from}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}@aws\PYGZhy{}appsync/utils/dynamodb\PYGZsq{}}
+\end{Verbatim}

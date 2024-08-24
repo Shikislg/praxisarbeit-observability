@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+		\PYG{n}{QUERY} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+s2}{		query MyQuery \PYGZob{}}
+\PYG{l+s+s2}{		  getUsers \PYGZob{}}
+\PYG{l+s+s2}{		    email}
+\PYG{l+s+s2}{		    name}
+\PYG{l+s+s2}{		    status}
+\PYG{l+s+s2}{		  \PYGZcb{}}
+\PYG{l+s+s2}{		\PYGZcb{}}
+\PYG{l+s+s2}{		\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\end{Verbatim}

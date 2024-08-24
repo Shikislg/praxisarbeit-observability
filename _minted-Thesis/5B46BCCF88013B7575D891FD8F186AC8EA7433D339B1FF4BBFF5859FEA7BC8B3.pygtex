@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+		\PYG{k}{return} \PYG{n}{result}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}data\PYGZdq{}}\PYG{p}{][}\PYG{l+s+s2}{\PYGZdq{}getUsers\PYGZdq{}}\PYG{p}{]}
+\end{Verbatim}
