@@ -20,7 +20,7 @@ Nun müssen die Anforderungen im Testsystem umgesetzt werden. Die Aufteilung ble
 \subsection{Umsetzung der Datenbereitstellung}
 	Bevor die Daten für Nutzer bereitgestellt werden können, müssen sie erstellt werden. Dafür wird die Tabelle erstellt und befüllt.
 	\subsubsection{DynamoDB}
-	DynamoDB wird verwendet, um die Datengrundlage zu garantieren. In DynamoDB wird eine Tabelle erstellt die, wie in dem Schema aus \ref{tab:schema} vorgegeben, die E-Mail als Schlüssel aufweist:
+	DynamoDB wird verwendet, um die Datengrundlage zu garantieren. In DynamoDB wird eine Tabelle erstellt, die, wie in dem Schema aus Tabelle \ref{tab:schema} vorgegeben, die E-Mail als Schlüssel aufweist:
 	\begin{figure}[H]
 		\centering
 		\begin{minipage}[t]{.7\textwidth} % Breite, z.B. 1\textwidth		
@@ -32,11 +32,11 @@ Nun müssen die Anforderungen im Testsystem umgesetzt werden. Die Aufteilung ble
 		\label{fig:tableCreation}
 		\end{minipage}
 		\end{figure}
-	Diese Tabelle sollte danach noch befüllt werden, damit Daten durch die API ausgegeben werden können. Dabei ist als einziges das Schema wichtig, da der Inhalt für die Simulation nicht relevant ist. Jertzt kann die API  erstellt werden, mit der die Daten für einen Nutzer (in diesem Fall für die Lambda-Funktion) erreichbar gemacht werden.
+	Diese Tabelle sollte danach noch befüllt werden, damit Daten durch die API ausgegeben werden können. Dabei ist einzig das Schema wichtig, da der Inhalt für die Simulation nicht relevant ist. Jetzt kann die API  erstellt werden, mit der die Daten für einen Nutzer (in diesem Fall für die Lambda-Funktion) erreichbar gemacht werden.
 	\subsubsection{Die API}
 	Der erste Schritt ist die Definition des Datenschema und der Methoden in GraphQL.
 	\paragraph{GraphQL}
-	Der GraphQL-Code erfüllt zwei verschiedene Aufgaben \cite{GraphQL2024}: Er definiert das Schema der Datenbank: zwar sind in DynamoDB keine Spalten vorgegeben, eine spaltenunabhängige Codierung ist im Rahmen dieses Projekts aber weder semantisch vorteilhaft noch im Rahmen der Praxisarbeit zeitlich realisierbar. Deshalb wird die Tabelle mit den jeweiligen Datentypen vorgegeben:
+	Der GraphQL-Code erfüllt zwei verschiedene Aufgaben: \cite{GraphQL2024} Er definiert das Schema der Datenbank: zwar sind in DynamoDB keine Spalten vorgegeben, eine spaltenunabhängige Codierung ist im Rahmen dieses Projekts aber weder semantisch vorteilhaft noch zeitlich realisierbar. Deshalb wird die Tabelle mit den jeweiligen Datentypen vorgegeben:
 	
 		\begin{figure}[H]
 		\centering
@@ -95,7 +95,7 @@ Nun müssen die Anforderungen im Testsystem umgesetzt werden. Die Aufteilung ble
 	\paragraph{API-Methoden}
 	Für jede API-Methode existiert eine JavaScript-Datei. Die Methoden unterscheiden sich aufgrund ihrer unterschiedlichen Anforderungen.
 	\subparagraph{Bibliothek}
-	Um Daten aus der Tabelle mit JavaScript zu editieren, wird eine Bibliothek verwendet, in der verschiedene Standard-Operationen enthalten sind, die auf einer DynamoDB-Tabelle ausgefürt werden können. Auf Basis dieser Bibliothek sind dann alle Methoden aufgebaut. Die Bibliothek wird in allen Dateien unter dem gleichen Alias importiert, weshalb der Import kein Teil der Code-Snippets für die Methoden ist, und stattdessen im Folgenden beispielhaft isoliert dargestellt wird. Der Name, mit der die Bilbiothek referenziert wird, ist ``ddb'':\newline
+	Um Daten aus der Tabelle mit JavaScript zu editieren, wird eine Bibliothek verwendet, in der verschiedene Standard-Operationen enthalten sind, die auf einer DynamoDB-Tabelle ausgeführt werden können. Auf Basis dieser Bibliothek sind dann alle Methoden aufgebaut. Die Bibliothek wird in allen Dateien unter dem gleichen Alias importiert, weshalb der Import kein Teil der Code-Snippets für die Methoden ist, und stattdessen im Folgenden beispielhaft isoliert dargestellt wird. Der Name, mit der die Bilbiothek referenziert wird, ist ``ddb'':\newline
 		\begin{figure}[H]
 		\centering
 		\begin{minipage}[t]{.7\textwidth} % Breite, z.B. 1\textwidth		
@@ -179,7 +179,7 @@ Nun müssen die Anforderungen im Testsystem umgesetzt werden. Die Aufteilung ble
 		\end{figure}
 	Für die Abfrage wird die Methode ddb.get() verwendet, welche die entsprechend passenden Einträge für einen gegebenen Schlüsselparameter liefert, sofern diese vorhanden sind.
 	\subparagraph{GetUsers}
-	Aus den Anforderungen an diese Methode geht hervor, dass als Eingabe-Parameter nur die Möglichkeit bestehen muss, die auszugebenden Felder auszuwählen. Für die Ausgabe muss aber definiert werden, welche Operation ausgeführt wird, \newpage Die resultierende Antwort ist die Rückgabe der Abfrage:\newline
+	Aus den Anforderungen an diese Methode geht hervor, dass als Eingabe-Parameter nur die Möglichkeit bestehen muss, die auszugebenden Felder auszuwählen. Für die Ausgabe muss aber definiert werden, welche Operation ausgeführt wird. Die resultierende Antwort ist die Rückgabe der Abfrage:\newline
 		\begin{figure}[H]
 		\centering
 		\begin{minipage}[t]{.7\textwidth} % Breite, z.B. 1\textwidth		
@@ -225,7 +225,7 @@ Nun müssen die Anforderungen im Testsystem umgesetzt werden. Die Aufteilung ble
 	\subsubsection{Terraform}
 	Die Basis der in Terraform definierten Infrastruktur ist die Verbindung mit der Datenbank und die Definition der zu verwendenden Rollen für die jeweiligen Abfragen. 
 	\paragraph{Definition der Tabelle}
-	Zuerst wird dafür eine Resource erstellt, in welcher die von Terraform angeforderten Informationen über die Datenbank angegeben werden \newline \cite{TerraformBestPractices2024}. Dazu gehören der Name der Datenbank, der Zahlungsmodus und der Datenbankschlüssel. Beim Zahlungsmodus unterscheidet AWS zwischen ``provisioned'' und ``pay per request''. Bei unvorhersehbaren Anfragefrequenzen empfiehlt AWS ``pay per request'', weshalb dieses auch hier verwendet wird: Da die Umsetzung auf  dem Testsystem stattfindet, ist nicht von regelmäßiger Nutzung auszugehen. Der Name der Datenbank ist ``users-db'' und der Datenbankschlüssel ist die E-Mail. Mit diesen Informationen kann nun die Ressource erstellt werden:
+	Zuerst wird dafür eine Resource erstellt, in welcher die von Terraform angeforderten Informationen über die Datenbank angegeben werden. \newline \cite{TerraformBestPractices2024}\newline Dazu gehören der Name der Datenbank, der Zahlungsmodus und der Datenbankschlüssel. Beim Zahlungsmodus unterscheidet AWS zwischen ``provisioned'' und ``pay per request''. Bei unvorhersehbaren Anfragefrequenzen empfiehlt AWS ``pay per request'', weshalb dieses auch hier verwendet wird: Da die Umsetzung auf  dem Testsystem stattfindet, ist nicht von regelmäßiger Nutzung auszugehen. Der Name der Datenbank ist ``users-db'' und der Datenbankschlüssel ist die E-Mail. Mit diesen Informationen kann nun die Ressource erstellt werden:
 	
 		\begin{figure}[H]
 		\centering
@@ -330,7 +330,7 @@ Nun müssen die Anforderungen im Testsystem umgesetzt werden. Die Aufteilung ble
 \subsection{Umsetzung des Datentransports}
 	Damit nun erhobenen Daten über die erstellte API verteilt werden können, muss die Infrastruktur für die Verteilung der Daten aufgebaut werden:
 	\subsubsection{AWS-Datadog-Integration}
-	Die praktische Umsetzung der Integration beschränkt sich auf die Eingabe von Daten in den Benutzeroberflächen von DataDog und AWS.
+	Die praktische Umsetzung der Integration beschränkt sich auf die Eingabe von Daten in die Benutzeroberflächen von DataDog und AWS.
 	\paragraph{DataDog}
 	Zuerst muss in DataDog ein neuer AWS-Account als Integration hinzugefügt werden. Dabei werden dem Nutzer vier Anpassungsoptionen gegeben:\newline
 	1. AWS-Region\newline
@@ -593,7 +593,7 @@ Zur Umsetzung des Tortendiagramms müssen die Filter so gewählt werden, dass mi
 	\label{fig:pieChartFilter}
 	\end{minipage}
 	\end{figure}
-Es sollen nur Logs der API, an der dieses Projekt durchgeführt wird, und von AppSync gesendet wurden in dieses Tortendiagram einfließen. Das stellen die ersten beiden Filter sicher. Danach wird ein sogenannter Wildcard-Filter auf das Feld ``evt.name'' angewendet. Das bedeutet, dass alle Logs in dieses Diagramm einfließen, die irgendeinen Wert für dieses Feld haben. Da das Feld nur für Antwort-Logs existiert, werden dadurch alle informativen Logs herausgefiltert, und das gewünschte Diagramm erreicht:\newline
+Es sollen nur Logs der API, an der dieses Projekt durchgeführt wird, und von AppSync gesendet wurden, in dieses Tortendiagram einfließen. Das stellen die ersten beiden Filter sicher. Danach wird ein sogenannter Wildcard-Filter auf das Feld ``evt.name'' angewendet. Das bedeutet, dass alle Logs in dieses Diagramm einfließen, die irgendeinen Wert für dieses Feld haben. Da das Feld nur für Antwort-Logs existiert, werden dadurch alle informativen Logs herausgefiltert, und das gewünschte Diagramm erreicht:\newline
 
 	\begin{figure}[H]
 	\centering
@@ -648,4 +648,4 @@ Hier ein beispielhafter Ausschnitt aus den Logs:
 	\end{minipage}
 	\end{figure}
  
-Durch die Informationen, die aus diesen Logs hervorgehen (Fehlertyp, Stelle im Code/in der Abfrage), ist das Debuggen der Fehler erleichtert. 
+Durch die Informationen, die aus diesen Logs hervorgehen (Fehlertyp, Stelle im Code/in der Abfrage), wird das Debuggen der Fehler erleichtert. 

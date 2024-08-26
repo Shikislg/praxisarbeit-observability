@@ -2,7 +2,7 @@
 In diesem Projekt wird ein Testsystem von Grund auf aufgebaut, mit dem das Produktivsystem imitiert werden soll, in das die Infrastruktur später eingebaut werden soll. Das bedeutet, dass auch die Elemente des Produktiv-Systems, die keinen Einfluss auf das Erreichen der Zielstellung haben, im Testsystem repliziert werden müssen, damit das System repräsentativ ist. \newline
 Der Aufbau des Testsystems teilt sich in vier Schritte auf:
 \subsection{Grundlagen der Datenbereitstellung}
-Im ersten Schritt wird das Produktiv-System nachgebaut. Es muss sichergestellt sein, dass Daten existieren, und dass auf diese Daten zugegriffen werden kann, damit Messungen zu diesem Zugriff stattfinden können.
+Im ersten Schritt wird das Produktiv-System nachgebaut. Es muss sichergestellt sein, dass Daten existieren, und dass auf diese Daten zugegriffen werden kann, damit Messungen dieses Zugriffs stattfinden können.
 \subsection{Grundlagen des Datentransports}
 Die Daten, die bei den Messungen erhoben werden, müssen weitergeleitet werden können, damit sie in darauf spezialisierten Programmen verarbeitet werden können.
 \subsection{Grundlagen des Datenabrufs}
@@ -13,23 +13,23 @@ Um die Umsetzung dieses Plans erklären zu können, sind einige Konzepte und Wer
 \subsection {Konzepte} 
 Für diese Arbeit relevant sind folgende Konzepte:
 \subsubsection{Application Programming Interface (API)}
-APIs sind Schnittstellen, die Entwicklern von Anwendungen die Möglichkeit bieten, auf Daten einer der Anwendung fernen Datenquelle sowohl lesend als auch schreibend zuzugreifen. \cite{Fielding2000} Bei geheimen Daten kann es dazu kommen, dass ein Entwickler nur mittels eines sogenannten „Disposable Tokens“ Zugriff auf die Daten hinter der Schnittstelle erlangen kann. Dabei wird ein Token generiert, welches Clients authentifiziert. Mit dieser Authentifizierung können auch verschiedene Berechtigungen wie „Read-Access“ (Nur lesen) oder „Read-Write-Access“ (Lesen und Schreiben) mit einem Nutzer assoziiert werden. Dieses System trägt dazu bei, die Datenintegrität der Daten zu gewährleisten.
+APIs sind Schnittstellen, die Entwicklern von Anwendungen die Möglichkeit bieten, auf Daten einer der Anwendung fernen Datenquelle sowohl lesend als auch schreibend zuzugreifen. \cite{Fielding2000} Bei geheimen Daten kann es dazu kommen, dass ein Entwickler nur mittels eines sogenannten ``Disposable Tokens'' Zugriff auf die Daten hinter der Schnittstelle erlangen kann. Dabei wird ein Token generiert, welches Clients authentifiziert. Mit dieser Authentifizierung können auch verschiedene Berechtigungen wie ``Read-Access'' (Nur lesen) oder ``Read-Write-Access'' (Lesen und Schreiben) mit einem Nutzer assoziiert werden. Dieses System trägt dazu bei, die Datenintegrität der Daten zu gewährleisten.
 \subsubsection{Effizienzfaktoren} 
-Kosten werden in AWS auf Basis der aufgewendeten Ressourcen berechnet. \cite{Kavis2014} Deshalb ist der Faktor Kosten für die Evaluierung potenzieller Effizienz relevant. Einerseits sollen Abfragen eine akzeptable und stabile Response time ermöglichen, gleichzeitig sollen die dafür nötigen Ressourcen möglichst klein gehalten werden. Es ist dementsprechend nicht zielführend, für eine höhere Effizienz die Rechenleistung und somit die Kosten zu erhöhen; viel eher soll der Verarbeitungsprozess bei Bedarf vereinfacht und optimiert werden, sodass die Response time ohne Erhöhung der Rechenkapazität verbessert wird. \cite{AWS2024e} 
+Kosten werden in AWS auf Basis der aufgewendeten Ressourcen berechnet. \cite{Kavis2014} Deshalb ist der Faktor Kosten für die Evaluierung potenzieller Effizienz relevant. Einerseits sollen Abfragen eine akzeptable und stabile Response time ermöglichen, andererseits sollen die dafür nötigen Ressourcen möglichst klein gehalten werden. Es ist dementsprechend nicht zielführend, für eine höhere Effizienz die Rechenleistung und somit die Kosten zu erhöhen; viel eher soll der Verarbeitungsprozess bei Bedarf vereinfacht und optimiert werden, sodass die Response time ohne Erhöhung der Rechenkapazität verbessert wird. \cite{AWS2024e} 
 \subsubsection{Daten}
-Im Folgenden wird das Konzept der Daten eine zentrale Rolle spielen. Referenziert sind dabei alle solche Daten, mit denen Einsicht in die Gesundheit des Systems ermöglicht werden. 
+Im Folgenden wird das Konzept der Daten eine zentrale Rolle spielen. Referenziert sind dabei alle solche Daten, mit denen Einsicht in die Gesundheit des Systems ermöglicht wird. 
 \subsection{Werkzeuge} 
 Zur Umsetzung der praktischen Elemente der Praxisarbeit werden die im Folgenden beschriebenen Elemente verwendet: 
 \subsubsection{AWS} 
-AWS ist eine Cloud-Computing Plattform des Unternehmens Amazon, welches unter anderem Funktionen in der Datenverarbeitung, Datenspeicherung und Monitoring anbietet. Unter anderem Teil des AWS-Portfolios sind die Anwendungen „CloudWatch“, „AppSync“ und „DynamoDB“, welche im Laufe dieses Projekts Verwendung finden werden. \cite{Zhang2010} 
+AWS ist eine Cloud-Computing Plattform des Unternehmens Amazon, welches unter anderem Funktionen in der Datenverarbeitung, Datenspeicherung und Monitoring anbietet. Unter anderem Teil des AWS-Portfolios sind die Anwendungen ``CloudWatch'', ``CloudFormation'', ``AppSync'', ``DynamoDB'' und ``Lambda'', welche im Laufe dieses Projekts Verwendung finden werden. \cite{Zhang2010} 
 \subsubsection{Werkzeuge der Datenbereitstellung}
-Um die Daten bereitzustellen, müsen sie erstellt werden und abrufbar sein. Folgende Werkzeuge werden dafür verwendet:
+Um die Daten bereitzustellen, müssen sie erstellt werden und abrufbar sein. Folgende Werkzeuge werden dafür verwendet:
 \paragraph{DynamoDB} 
-DynamoDB ist eine vollständig verwaltete Schlüssel-Wert- und Dokumentendatenbank, die bei jeder Größenordnung eine Responsetime von wenigen Millisekunden garantiert. \cite{AWS2024c}
+DynamoDB ist eine vollständig verwaltete Schlüssel-Wert- und Dokumentendatenbank, die bei jeder Größenordnung eine Response time von wenigen Millisekunden garantiert. \cite{AWS2024c}
 \paragraph{GraphQL} 
 GraphQL ist eine Query-Sprache mit denen sich Abfragen für eine API konfigurieren lassen. Durch die Begrenzung der Ausgabe auf explizit in der Query geforderte Elemente werden Ressourcen gespart. \cite{GraphQL2024}
 \subparagraph{Fehlerbehandlung in GraphQL}
-Eine Eigenschaft von GraphQL ist, dass Fehler nicht zum Abbruch der Abfrage führen. Tritt ein Fehler auf, wird dieser genau wie ein korrektes Ergebnis als JSON ausgegeben. \cite{GraphQL2024} Der Aufbau der GraphQL-Antwort sieht folgendermaßen aus (die Beschreibungen der Felder werden durch Hovern angezeigt): 
+Eine Eigenschaft von GraphQL ist, dass Fehler nicht zum Abbruch der Abfrage führen. Tritt ein Fehler auf, wird dieser genau wie ein korrektes Ergebnis als JSON ausgegeben. \cite{GraphQL2024}\newline Der Aufbau der GraphQL-Antwort sieht folgendermaßen aus (die Beschreibungen der Felder werden durch Hovern angezeigt): 
 
 	\begin{figure}[H]
 	\centering
@@ -47,11 +47,11 @@ Eine Eigenschaft von GraphQL ist, dass Fehler nicht zum Abbruch der Abfrage füh
 	\end{minipage}
 	\end{figure}
  
-Tritt ein Fehler auf, so ist das Feld „data“ leer, und die aufgetretenen Fehler werden in dem Feld „errors“ gelistet. Tritt kein Fehler auf, befindet sich die Antwort auf die Anfrage in dem Feld „data“. \cite{GraphQL2024b}
+Tritt ein Fehler auf, so ist das Feld „data“ leer, und die aufgetretenen Fehler werden in dem Feld „errors“ gelistet. Tritt kein Fehler auf, befindet sich die Antwort auf die Anfrage in dem Feld „data“. \cite{GraphQL2024b}\newline
 Eine Nebeneigenschaft dieser Art der Fehlerbehandlung durch GraphQL ist, dass semantische Fehler in der Eingabe nicht zwingendermaßen abgefangen werden müssen, da die Abfrage trotzdem ausgeführt werden kann. Bei Bedarf kann eine Hilfestellung für Nutzer beim Auftreten häufiger Fehler eingebaut werden. 
 Diese Fehlerbehandlung bringt jedoch eine Hürde in der Fehlererkennung in Datadog, da alle Antworten, ob fehlerhaft oder nicht, den gleichen Fehlercode ausgeben.
 \paragraph{AppSync} 
-AppSync bietet Werkzeuge zur Erstellung flexibler Schnittstellen, durch die ein sicherer Zugriff und Manipulation von Daten einer oder mehrerer Datensätze möglich ist. 
+AppSync bietet Werkzeuge zur Erstellung flexibler APIs, durch die ein sicherer Zugriff und Manipulation von Daten einer oder mehrerer Datensätze möglich ist. 
 \paragraph{Terraform} 
 Terraform ist eine Konfigurationssprache, mit der eine Infrastruktur aufgesetzt wird, die Multi-Cloud-Bereitstellung automatisiert. \cite{HashiCorp2024} 
 \subsubsection{Werkzeuge des Datentransports}
@@ -61,11 +61,11 @@ AWS CloudFormation bietet eine Plattform, mit der Integrationen zwischen AWS und
 \subsubsection{Werkzeuge des Datenabrufs}
 Um Daten automatisiert abrufen zu können, wird die folgende Anwendung verwendet:
 \paragraph{Lambda}
-Lambda ist eine Applikation des AWS-Systems, mit welcher automatische Datenverarbeitung auf Basis von selbst geschriebenen Methoden in fast jeder Art der Anwendung oder jedem Backend-Service ermöglicht. \cite{AWS2024d} 
+Lambda ist eine Applikation des AWS-Systems, mit welcher automatische Datenverarbeitung auf Basis von selbst geschriebenen Methoden in fast jeder Art der Anwendung oder jedem Backend-Service ermöglicht wird. \cite{AWS2024d} 
  
  \subsubsection{Werkzeuge des Daten-Monitorings}
 Folgende Anwendungen werden verwendet, um die erhobenen Daten darzustellen.
 \paragraph{DataDog} 
 DataDog ist, ähnlich wie CloudWatch, eine Applikation zur Überwachung von Ressourcen und Applikationen, jedoch mit Fokus auf Performance. Unter anderem durch Graphen lassen sich mit DataDog Trends in der Performance erkennen, wodurch präventive Maßnahmen getroffen werden können. \cite{DataDog2024} 
 \paragraph{CloudWatch} 
-CloudWatch ist eine Applikation des AWS-Portfolios, mit welcher Ressourcen und Applikationen, die in der AWS-Umgebung laufen, in Echtzeit überwacht werden können. Unter anderem werden Fehler und ihre Meldungen dokumentiert, Hinweise und andere Logs gespeichert, und wenn gewünscht Alarme ausgelöst. 
+CloudWatch ist eine Applikation des AWS-Portfolios, mit welcher Ressourcen und Applikationen, die in der AWS-Umgebung laufen, in Echtzeit überwacht werden können. Unter anderem werden Fehler und ihre Meldungen dokumentiert, Hinweise und andere Logs gespeichert, und wenn gewünscht, Alarme ausgelöst. 
